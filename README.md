@@ -26,19 +26,32 @@ A fully decentralized peer-to-peer lending platform built on Push Network with a
 
 - Node.js 18+ and npm
 - **No wallet required!** - Use email/social login or connect any Web3 wallet
+- **No API keys needed!** - Zero configuration required
 - Testnet PC tokens from [Push Network Faucet](https://faucet.push.org)
 
-### Installation
+### Installation (3 Simple Steps)
 
 ```bash
-# Install dependencies
+# 1. Clone the repository
+git clone https://github.com/faithful1ofall/PushLend.git
+cd PushLend
+
+# 2. Install dependencies
 npm install
 
-# Run development server
+# 3. Run development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
+
+**That's it!** No environment variables, no API keys, no configuration needed! 🎉
+
+### Environment Variables
+
+**None required!** The app works out of the box.
+
+For customization options, see [ENV_SETUP.md](./ENV_SETUP.md)
 
 ### Universal Access
 

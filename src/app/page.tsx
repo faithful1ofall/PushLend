@@ -2,30 +2,11 @@
 
 import { PushUniversalWalletProvider, PushUI } from '@pushchain/ui-kit';
 import UniversalPushDashboard from '@/components/UniversalPushDashboard';
-import { useEffect } from 'react';
 
 export default function Home() {
-  useEffect(() => {
-    // Log when component mounts
-    console.log('🚀 PushLend Universal App initialized');
-  }, []);
-
-  // Configure Push Universal Wallet
+  // Configure Push Universal Wallet - using exact pattern from docs
   const walletConfig = {
     network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
-    login: {
-      email: true,
-      google: true,
-      wallet: {
-        enabled: true,
-      },
-      appPreview: true,
-    },
-    modal: {
-      loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SPLIT,
-      connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
-      appPreview: true,
-    },
   };
 
   // App metadata

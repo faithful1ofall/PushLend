@@ -1,7 +1,37 @@
 'use client';
 
-import PushDashboard from '@/components/PushDashboard';
+import { PushUniversalWalletProvider, PushUI } from '@pushchain/ui-kit';
+import UniversalPushDashboard from '@/components/UniversalPushDashboard';
 
 export default function Home() {
-  return <PushDashboard />;
+  // Configure Push Universal Wallet
+  const walletConfig = {
+    network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
+    login: {
+      email: true,
+      google: true,
+      wallet: {
+        enabled: true,
+      },
+      appPreview: true,
+    },
+    modal: {
+      loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SPLIT,
+      connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
+      appPreview: true,
+    },
+  };
+
+  // App metadata
+  const appMetadata = {
+    logoUrl: 'https://via.placeholder.com/150?text=PushLend',
+    title: 'PushLend',
+    description: 'Universal P2P Lending Platform on Push Network',
+  };
+
+  return (
+    <PushUniversalWalletProvider config={walletConfig} app={appMetadata}>
+      <UniversalPushDashboard />
+    </PushUniversalWalletProvider>
+  );
 }

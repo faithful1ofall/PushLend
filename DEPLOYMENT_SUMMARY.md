@@ -27,7 +27,9 @@ Successfully converted StacksLend to PushLend and deployed it as a universal app
 
 ### 3. Frontend Development
 - ✅ Built React/Next.js UI with TypeScript
-- ✅ Integrated MetaMask wallet connection
+- ✅ **Integrated Push UI Kit for Universal Access**
+- ✅ **Multi-chain wallet support** (Ethereum, Solana, etc.)
+- ✅ **Email/Social login** (Google, email OTP)
 - ✅ Implemented all features:
   - Loan Offers tab (create, view, accept, cancel)
   - Borrow tab (create loan requests)
@@ -35,6 +37,7 @@ Successfully converted StacksLend to PushLend and deployed it as a universal app
   - Analytics tab (credit score, statistics)
 - ✅ Rebranded from StacksLend to PushLend
 - ✅ Connected to deployed testnet contract
+- ✅ **True Universal App** - accessible from any blockchain
 
 ### 4. Push Network Integration
 - ✅ Configured Hardhat for Push Network testnet
@@ -77,10 +80,12 @@ Successfully converted StacksLend to PushLend and deployed it as a universal app
 ### 1. Access the Application
 Visit the live URL: [https://3000--019a1b2a-8808-7875-b580-6c9e05958938.eu-central-1-01.gitpod.dev](https://3000--019a1b2a-8808-7875-b580-6c9e05958938.eu-central-1-01.gitpod.dev)
 
-### 2. Connect Wallet
-- Click "Connect Wallet"
-- Approve MetaMask connection
-- The app will automatically add Push Network to your wallet
+### 2. Connect (Universal Access!)
+Choose your preferred method:
+- **Email/Social:** Use email OTP or Google login (no wallet needed!)
+- **Web3 Wallet:** Connect MetaMask, Phantom, or any wallet
+- **Any Chain:** Connect from Ethereum, Solana, or other blockchains
+- The app automatically creates your Push Network account
 
 ### 3. Get Test Tokens
 - Visit [https://faucet.push.org](https://faucet.push.org)

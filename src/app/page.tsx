@@ -1,27 +1,39 @@
 'use client';
 
 import { PushUniversalWalletProvider, PushUI } from '@pushchain/ui-kit';
-import UniversalPushDashboard from '@/components/UniversalPushDashboard';
+import LandingPage from '@/components/LandingPage';
 
 export default function Home() {
-  // Configure Push Universal Wallet - using exact pattern from docs
   const walletConfig = {
     network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
+    login: {
+      email: true,
+      google: true,
+      wallet: {
+        enabled: true,
+      },
+      appPreview: true,
+    },
+    modal: {
+      loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SPLIT,
+      connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
+      appPreview: true,
+    },
   };
 
-  // App metadata
   const appMetadata = {
-    logoUrl: 'https://via.placeholder.com/150?text=PushLend',
+    logoUrl: 'https://via.placeholder.com/150?text=PL',
     title: 'PushLend',
-    description: 'Universal P2P Lending Platform on Push Network',
+    description: 'Universal P2P Lending Platform on Push Network - Connect from any blockchain',
   };
 
   return (
     <PushUniversalWalletProvider 
       config={walletConfig} 
       app={appMetadata}
+      themeMode={PushUI.CONSTANTS.THEME.DARK}
     >
-      <UniversalPushDashboard />
+      <LandingPage />
     </PushUniversalWalletProvider>
   );
 }

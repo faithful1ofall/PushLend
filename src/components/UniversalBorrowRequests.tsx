@@ -2,14 +2,10 @@
 
 import { useState } from 'react';
 import { ethers } from 'ethers';
+import { useLendingContract } from '@/hooks/useLendingContract';
 
-interface UniversalBorrowRequestsProps {
-  pushChainClient: any;
-  address: string;
-  getContract: () => ethers.Contract | null;
-}
-
-export default function UniversalBorrowRequests({ pushChainClient, address, getContract }: UniversalBorrowRequestsProps) {
+export default function UniversalBorrowRequests() {
+  const { getContract, sendTransaction, userAddress, isConnected } = useLendingContract();
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState('');
   const [collateral, setCollateral] = useState('');
@@ -25,20 +21,24 @@ export default function UniversalBorrowRequests({ pushChainClient, address, getC
 
     try {
       setLoading(true);
-      const contract = getContract();
+      const contract = await getContract();
       if (!contract) return;
 
       const amountWei = ethers.parseEther(amount);
       const collateralWei = ethers.parseEther(collateral);
       const durationSeconds = parseInt(duration) * 24 * 60 * 60;
       
-      const tx = await contract.createLoanRequest(
+      const data = contract.interface.encodeFunctionData('createLoanRequest', [
         amountWei,
         parseInt(interestRate) * 100,
-        durationSeconds,
-        { value: collateralWei }
-      );
-      await tx.wait();
+        durationSeconds
+      ]);
+
+      const tx = await sendTransaction({
+        to: contract.target,
+        data: data,
+        value: collateralWei.toString()
+      });
       
       alert('Loan request created successfully!');
       setAmount('');

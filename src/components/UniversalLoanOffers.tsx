@@ -2,15 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { PushChain } from '@pushchain/core';
+import { useLendingContract } from '@/hooks/useLendingContract';
 
-interface UniversalLoanOffersProps {
-  pushChainClient: any;
-  address: string;
-  getContract: () => ethers.Contract | null;
-}
-
-export default function UniversalLoanOffers({ pushChainClient, address, getContract }: UniversalLoanOffersProps) {
+export default function UniversalLoanOffers() {
+  const { getContract, sendTransaction, userAddress, isConnected } = useLendingContract();
+  const address = userAddress || '';
   const [offers, setOffers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -28,7 +24,7 @@ export default function UniversalLoanOffers({ pushChainClient, address, getContr
   const loadOffers = async () => {
     try {
       setLoading(true);
-      const contract = getContract();
+      const contract = await getContract();
       if (!contract) return;
 
       const counter = await contract.offerCounter();
@@ -62,20 +58,24 @@ export default function UniversalLoanOffers({ pushChainClient, address, getContr
 
     try {
       setLoading(true);
-      const contract = getContract();
+      const contract = await getContract();
       if (!contract) return;
 
       const amountWei = ethers.parseEther(amount);
       const durationSeconds = parseInt(maxDuration) * 24 * 60 * 60;
       
-      const tx = await contract.createOffer(
+      const data = contract.interface.encodeFunctionData('createOffer', [
         amountWei,
         parseInt(interestRate) * 100,
         durationSeconds,
         parseInt(minCollateralRatio)
-      );
-      
-      await tx.wait();
+      ]);
+
+      const tx = await sendTransaction({
+        to: contract.target,
+        data: data,
+        value: '0'
+      });
       alert('Offer created successfully!');
       setShowCreateForm(false);
       setAmount('');
@@ -98,14 +98,19 @@ export default function UniversalLoanOffers({ pushChainClient, address, getContr
 
     try {
       setLoading(true);
-      const contract = getContract();
+      const contract = await getContract();
       if (!contract) return;
 
       const durationSeconds = parseInt(duration) * 24 * 60 * 60;
       const collateralWei = ethers.parseEther(collateral);
       
-      const tx = await contract.acceptOffer(offerId, durationSeconds, { value: collateralWei });
-      await tx.wait();
+      const data = contract.interface.encodeFunctionData('acceptOffer', [offerId, durationSeconds]);
+
+      const tx = await sendTransaction({
+        to: contract.target,
+        data: data,
+        value: collateralWei.toString()
+      });
       
       alert('Offer accepted successfully!');
       await loadOffers();
@@ -122,11 +127,16 @@ export default function UniversalLoanOffers({ pushChainClient, address, getContr
 
     try {
       setLoading(true);
-      const contract = getContract();
+      const contract = await getContract();
       if (!contract) return;
 
-      const tx = await contract.cancelOffer(offerId);
-      await tx.wait();
+      const data = contract.interface.encodeFunctionData('cancelOffer', [offerId]);
+
+      const tx = await sendTransaction({
+        to: contract.target,
+        data: data,
+        value: '0'
+      });
       
       alert('Offer cancelled successfully!');
       await loadOffers();

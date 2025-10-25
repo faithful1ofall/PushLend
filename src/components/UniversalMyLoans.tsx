@@ -3,14 +3,10 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { LoanStatus } from '@/lib/push-config';
+import { useLendingContract } from '@/hooks/useLendingContract';
 
-interface UniversalMyLoansProps {
-  pushChainClient: any;
-  address: string;
-  getContract: () => ethers.Contract | null;
-}
-
-export default function UniversalMyLoans({ pushChainClient, address, getContract }: UniversalMyLoansProps) {
+export default function UniversalMyLoans() {
+  const { getContract, sendTransaction, userAddress: address, isConnected } = useLendingContract();
   const [loans, setLoans] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -21,8 +17,8 @@ export default function UniversalMyLoans({ pushChainClient, address, getContract
   const loadLoans = async () => {
     try {
       setLoading(true);
-      const contract = getContract();
-      if (!contract) return;
+      const contract = await getContract();
+      if (!contract || !address) return;
 
       const counter = await contract.loanCounter();
       const loadedLoans = [];
@@ -60,12 +56,17 @@ export default function UniversalMyLoans({ pushChainClient, address, getContract
 
     try {
       setLoading(true);
-      const contract = getContract();
+      const contract = await getContract();
       if (!contract) return;
 
       const amountWei = ethers.parseEther(amount);
-      const tx = await contract.repayLoan(loanId, { value: amountWei });
-      await tx.wait();
+      const data = contract.interface.encodeFunctionData('repayLoan', [loanId]);
+
+      const tx = await sendTransaction({
+        to: contract.target,
+        data: data,
+        value: amountWei.toString()
+      });
       
       alert('Loan repaid successfully!');
       await loadLoans();
@@ -82,11 +83,16 @@ export default function UniversalMyLoans({ pushChainClient, address, getContract
 
     try {
       setLoading(true);
-      const contract = getContract();
+      const contract = await getContract();
       if (!contract) return;
 
-      const tx = await contract.liquidateLoan(loanId);
-      await tx.wait();
+      const data = contract.interface.encodeFunctionData('liquidateLoan', [loanId]);
+
+      const tx = await sendTransaction({
+        to: contract.target,
+        data: data,
+        value: '0'
+      });
       
       alert('Loan liquidated successfully!');
       await loadLoans();
@@ -103,11 +109,16 @@ export default function UniversalMyLoans({ pushChainClient, address, getContract
 
     try {
       setLoading(true);
-      const contract = getContract();
+      const contract = await getContract();
       if (!contract) return;
 
-      const tx = await contract.fundLoan(loanId, { value: amount });
-      await tx.wait();
+      const data = contract.interface.encodeFunctionData('fundLoan', [loanId]);
+
+      const tx = await sendTransaction({
+        to: contract.target,
+        data: data,
+        value: amount.toString()
+      });
       
       alert('Loan funded successfully!');
       await loadLoans();
@@ -140,8 +151,8 @@ export default function UniversalMyLoans({ pushChainClient, address, getContract
       ) : (
         <div className="grid gap-4">
           {loans.map((loan) => {
-            const isBorrower = loan.borrower.toLowerCase() === address.toLowerCase();
-            const isLender = loan.lender.toLowerCase() === address.toLowerCase();
+            const isBorrower = address && loan.borrower.toLowerCase() === address.toLowerCase();
+            const isLender = address && loan.lender.toLowerCase() === address.toLowerCase();
 
             return (
               <div key={loan.id} className="bg-white rounded-xl shadow-lg p-6">

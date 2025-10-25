@@ -2,13 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
+import { useLendingContract } from '@/hooks/useLendingContract';
 
-interface UniversalAnalyticsProps {
-  address: string;
-  getContract: () => ethers.Contract | null;
-}
-
-export default function UniversalAnalytics({ address, getContract }: UniversalAnalyticsProps) {
+export default function UniversalAnalytics() {
+  const { getContract, userAddress: address, isConnected } = useLendingContract();
   const [creditScore, setCreditScore] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
@@ -19,8 +16,8 @@ export default function UniversalAnalytics({ address, getContract }: UniversalAn
   const loadCreditScore = async () => {
     try {
       setLoading(true);
-      const contract = getContract();
-      if (!contract) return;
+      const contract = await getContract();
+      if (!contract || !address) return;
 
       const score = await contract.getCreditScore(address);
       setCreditScore(score);

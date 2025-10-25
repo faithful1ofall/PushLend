@@ -2,8 +2,14 @@
 
 import { PushUniversalWalletProvider, PushUI } from '@pushchain/ui-kit';
 import UniversalPushDashboard from '@/components/UniversalPushDashboard';
+import { useEffect } from 'react';
 
 export default function Home() {
+  useEffect(() => {
+    // Log when component mounts
+    console.log('🚀 PushLend Universal App initialized');
+  }, []);
+
   // Configure Push Universal Wallet
   const walletConfig = {
     network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,
@@ -30,7 +36,10 @@ export default function Home() {
   };
 
   return (
-    <PushUniversalWalletProvider config={walletConfig} app={appMetadata}>
+    <PushUniversalWalletProvider 
+      config={walletConfig} 
+      app={appMetadata}
+    >
       <UniversalPushDashboard />
     </PushUniversalWalletProvider>
   );

@@ -14,12 +14,21 @@ type Tab = 'offers' | 'borrow' | 'myloans' | 'analytics';
 export default function UniversalPushDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('offers');
   const [balance, setBalance] = useState<string>('0');
+  const [error, setError] = useState<string>('');
   
   const { connectionStatus } = usePushWalletContext();
   const { pushChainClient } = usePushChainClient();
 
   const isConnected = connectionStatus === PushUI.CONSTANTS.CONNECTION.STATUS.CONNECTED;
+  const isConnecting = connectionStatus === PushUI.CONSTANTS.CONNECTION.STATUS.CONNECTING;
   const address = pushChainClient?.universal.account || '';
+
+  // Debug logging
+  useEffect(() => {
+    console.log('📊 Connection Status:', connectionStatus);
+    console.log('🔗 Push Chain Client:', pushChainClient ? 'Available' : 'Not available');
+    console.log('📍 Address:', address);
+  }, [connectionStatus, pushChainClient, address]);
 
   useEffect(() => {
     if (isConnected && pushChainClient) {
@@ -79,6 +88,18 @@ export default function UniversalPushDashboard() {
     );
   };
 
+  if (isConnecting) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-600 mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-900">Connecting...</h2>
+          <p className="text-gray-600 mt-2">Setting up your universal account</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!isConnected) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center p-4">
@@ -90,6 +111,12 @@ export default function UniversalPushDashboard() {
               Connect from any chain - Ethereum, Solana, and more!
             </p>
           </div>
+
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
 
           <div className="flex justify-center">
             <PushUniversalAccountButton />

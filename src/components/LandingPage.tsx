@@ -14,12 +14,12 @@ export default function LandingPage() {
     if (isConnected) {
       router.push('/dashboard');
     }
-  }, [isConnected]);
+  }, [isConnected, router]);
 
   const handleConnect = () => {
-   // if (handleConnectToPushWallet) {
+    if (handleConnectToPushWallet) {
       handleConnectToPushWallet();
- //   }
+    }
   };
 
   return (

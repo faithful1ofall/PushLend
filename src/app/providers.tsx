@@ -36,7 +36,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   };
 
   const appMetadata = {
-    logoUrl: '/logo.svg',
+    logoUrl: 'https://cdn.dorahacks.io/static/files/19a1f2e43ea54c5fcc9a7cf46bd809e0.png@128h.webp',
     title: 'PushLend',
     description: 'Universal P2P Lending Platform on Push Network - Connect from any blockchain',
   };

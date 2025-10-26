@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/DashboardLayout';
 import UniversalLoanOffers from '@/components/UniversalLoanOffers';
@@ -29,10 +30,12 @@ export default function DashboardPage() {
   };
 
   return (
-    <ProtectedRoute>
-      <DashboardLayout activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as Tab)}>
-        {renderContent()}
-      </DashboardLayout>
-    </ProtectedRoute>
+    <ErrorBoundary>
+      <ProtectedRoute>
+        <DashboardLayout activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as Tab)}>
+          {renderContent()}
+        </DashboardLayout>
+      </ProtectedRoute>
+    </ErrorBoundary>
   );
 }

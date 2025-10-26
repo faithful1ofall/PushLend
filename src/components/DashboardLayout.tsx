@@ -21,6 +21,7 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
     if (handleUserLogOutEvent) {
       handleUserLogOutEvent();
     }
+    localStorage.removeItem('wasConnected');
     router.push('/');
   };
 

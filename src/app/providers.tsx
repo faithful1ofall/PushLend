@@ -30,9 +30,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
       appPreview: true,
     },
-    transak: {
+   /* transak: {
       enabled: true,
-    },
+    },*/
   };
 
   const appMetadata = {

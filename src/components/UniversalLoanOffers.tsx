@@ -73,6 +73,7 @@ export default function UniversalLoanOffers() {
 
       setOffers(loadedOffers);
     } catch (error) {
+      alert(`Error loading offers: ${error}`);
       console.error('Error loading offers:', error);
     } finally {
       setLoading(false);

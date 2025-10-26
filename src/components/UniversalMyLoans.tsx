@@ -172,19 +172,19 @@ export default function UniversalMyLoans() {
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-gray-600">Principal</p>
-                    <p className="font-semibold">{ethers.formatEther(loan.principalAmount)} PC</p>
+                    <p className="font-semibold text-gray-900">{ethers.formatEther(loan.principalAmount)} PC</p>
                   </div>
                   <div>
                     <p className="text-gray-600">Collateral</p>
-                    <p className="font-semibold">{ethers.formatEther(loan.collateralAmount)} PC</p>
+                    <p className="font-semibold text-gray-900">{ethers.formatEther(loan.collateralAmount)} PC</p>
                   </div>
                   <div>
                     <p className="text-gray-600">Interest Rate</p>
-                    <p className="font-semibold">{Number(loan.interestRate) / 100}% per year</p>
+                    <p className="font-semibold text-gray-900">{Number(loan.interestRate) / 100}% per year</p>
                   </div>
                   <div>
                     <p className="text-gray-600">Duration</p>
-                    <p className="font-semibold">{Number(loan.duration) / (24 * 60 * 60)} days</p>
+                    <p className="font-semibold text-gray-900">{Number(loan.duration) / (24 * 60 * 60)} days</p>
                   </div>
                 </div>
 

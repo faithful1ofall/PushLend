@@ -217,7 +217,7 @@ export default function UniversalLoanOffers() {
                 type="number"
                 value={interestRate}
                 onChange={(e) => setInterestRate(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                className="text-gray-900 placeholder-gray-400 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                 placeholder="e.g., 10"
               />
             </div>
@@ -230,7 +230,7 @@ export default function UniversalLoanOffers() {
                 type="number"
                 value={maxDuration}
                 onChange={(e) => setMaxDuration(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                className="text-gray-900 placeholder-gray-400 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                 placeholder="e.g., 30"
               />
             </div>
@@ -243,7 +243,7 @@ export default function UniversalLoanOffers() {
                 type="number"
                 value={minCollateralRatio}
                 onChange={(e) => setMinCollateralRatio(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                className="text-gray-900 placeholder-gray-400 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                 placeholder="e.g., 15000"
               />
             </div>

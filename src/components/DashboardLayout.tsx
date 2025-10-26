@@ -111,7 +111,7 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
                 <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
                   PL
                 </div>
-                <h3 className="text-xl font-bold">PushLend</h3>
+                <h3 className="text-xl font-bold text-gray-900">PushLend</h3>
               </div>
             </div>
           )}

@@ -28,7 +28,7 @@ export default function UniversalLoanOffers() {
       if (!contract) return;
 
       const counter = await contract.offerCounter();
-      const totalOffers = counter.toNumber(); // safer conversion for small numbers
+      //const totalOffers = counter.toNumber(); // safer conversion for small numbers
       
       const loadedOffers = [];
 

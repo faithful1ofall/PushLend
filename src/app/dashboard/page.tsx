@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import { PushUniversalWalletProvider, PushUI } from '@pushchain/ui-kit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/DashboardLayout';
 import UniversalLoanOffers from '@/components/UniversalLoanOffers';
 import UniversalBorrowRequests from '@/components/UniversalBorrowRequests';
 import UniversalMyLoans from '@/components/UniversalMyLoans';
 import UniversalAnalytics from '@/components/UniversalAnalytics';
+
+const queryClient = new QueryClient();
 
 type Tab = 'offers' | 'borrow' | 'myloans' | 'analytics';
 
@@ -54,21 +57,26 @@ export default function DashboardPage() {
       connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
       appPreview: true,
     },
+    transak: {
+      enabled: true,
+    },
   };
 
   const appMetadata = {
-    logoUrl: 'https://via.placeholder.com/150?text=PL',
+    logoUrl: '/logo.svg',
     title: 'PushLend',
-    description: 'Universal P2P Lending Platform on Push Network',
+    description: 'Universal P2P Lending Platform on Push Network - Connect from any blockchain',
   };
 
   return (
-    <PushUniversalWalletProvider 
-      config={walletConfig} 
-      app={appMetadata}
-      themeMode={PushUI.CONSTANTS.THEME.DARK}
-    >
-      <DashboardContent />
-    </PushUniversalWalletProvider>
+    <QueryClientProvider client={queryClient}>
+      <PushUniversalWalletProvider 
+        config={walletConfig} 
+        app={appMetadata}
+        themeMode={PushUI.CONSTANTS.THEME.DARK}
+      >
+        <DashboardContent />
+      </PushUniversalWalletProvider>
+    </QueryClientProvider>
   );
 }

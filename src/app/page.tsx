@@ -1,7 +1,10 @@
 'use client';
 
 import { PushUniversalWalletProvider, PushUI } from '@pushchain/ui-kit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import LandingPage from '@/components/LandingPage';
+
+const queryClient = new QueryClient();
 
 export default function Home() {
   const walletConfig = {
@@ -19,21 +22,26 @@ export default function Home() {
       connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
       appPreview: true,
     },
+    transak: {
+      enabled: true,
+    },
   };
 
   const appMetadata = {
-    logoUrl: 'https://plus.unsplash.com/premium_photo-1746731481770-08b2f71661d0?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    logoUrl: '/logo.svg',
     title: 'PushLend',
     description: 'Universal P2P Lending Platform on Push Network - Connect from any blockchain',
   };
 
   return (
-    <PushUniversalWalletProvider 
-      config={walletConfig} 
-      app={appMetadata}
-      themeMode={PushUI.CONSTANTS.THEME.DARK}
-    >
-      <LandingPage />
-    </PushUniversalWalletProvider>
+    <QueryClientProvider client={queryClient}>
+      <PushUniversalWalletProvider 
+        config={walletConfig} 
+        app={appMetadata}
+        themeMode={PushUI.CONSTANTS.THEME.DARK}
+      >
+        <LandingPage />
+      </PushUniversalWalletProvider>
+    </QueryClientProvider>
   );
 }

@@ -1,0 +1,10 @@
+<svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="75" cy="75" r="70" fill="#9333EA"/>
+  
+  <!-- PL Letters -->
+  <text x="75" y="95" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="white" text-anchor="middle">PL</text>
+  
+  <!-- Accent Circle -->
+  <circle cx="75" cy="75" r="70" fill="none" stroke="#C084FC" stroke-width="4"/>
+</svg>

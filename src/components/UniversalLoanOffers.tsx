@@ -18,7 +18,7 @@ export default function UniversalLoanOffers() {
   const [minCollateralRatio, setMinCollateralRatio] = useState('15000');
 
   useEffect(() => {
-    loadOffers();
+  //  loadOffers();
   }, []);
 
   const loadOffers = async () => {
@@ -28,6 +28,8 @@ export default function UniversalLoanOffers() {
       if (!contract) return;
 
       const counter = await contract.offerCounter();
+   //   const totalOffers = counter.toNumber(); // safer conversion for small numbers
+      
       const loadedOffers = [];
 
       for (let i = 1; i <= Number(counter); i++) {

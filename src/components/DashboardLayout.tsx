@@ -33,7 +33,7 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
   ];
 
   return (
-    <div className="flex gap-8 h-screen text-lg font-sans">
+    <div className="flex gap-8 h-screen text-lg font-sans bg-gray-50">
       {/* Sidebar */}
       {!isTabletOrMobile && sidebarVisible && (
         <div
@@ -91,14 +91,14 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
         </div>
       )}
 
-      <div className="flex-1 overflow-auto h-full flex flex-col gap-10 px-7 lg:px-20 py-10">
+      <div className="flex-1 overflow-auto h-full flex flex-col gap-10 px-7 lg:px-20 py-10 bg-gray-50">
         <div className="flex items-center justify-between w-full">
           {/* Show PushLend logo with toggle when sidebar is hidden */}
           {!isTabletOrMobile && !sidebarVisible && (
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setSidebarVisible(!sidebarVisible)}
-                className="p-2 rounded-lg hover:bg-purple-600/20 transition-colors"
+                className="p-2 rounded-lg hover:bg-purple-600/20 transition-colors text-gray-900"
                 title="Show Sidebar"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

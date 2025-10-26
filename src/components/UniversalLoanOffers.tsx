@@ -33,6 +33,34 @@ export default function UniversalLoanOffers() {
       const loadedOffers = [];
 
       for (let i = 1; i <= totalOffers; i++) {
+  try {
+    const offer = await contract.getOffer(i);
+
+    // Skip empty / invalid offers
+    if (
+      !offer ||
+      !offer.active ||
+      offer.amount == null ||
+      offer.interestRate == null ||
+      offer.maxDuration == null ||
+      offer.minCollateralRatio == null
+    ) continue;
+
+    loadedOffers.push({
+      id: i,
+      amount: offer.amount,
+      interestRate: offer.interestRate,
+      maxDuration: offer.maxDuration,
+      minCollateralRatio: offer.minCollateralRatio,
+      lender: offer.lender,
+      active: offer.active,
+    });
+  } catch (err) {
+    console.error(`Error loading offer ${i}:`, err);
+  }
+      }
+
+     /* for (let i = 1; i <= totalOffers; i++) {
         try {
           const offer = await contract.getOffer(i);
           if (offer.active) {
@@ -41,7 +69,7 @@ export default function UniversalLoanOffers() {
         } catch (err) {
           console.error(`Error loading offer ${i}:`, err);
         }
-      }
+      }*/
 
       setOffers(loadedOffers);
     } catch (error) {

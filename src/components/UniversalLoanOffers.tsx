@@ -181,19 +181,19 @@ export default function UniversalLoanOffers() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Loan Offers</h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Loan Offers</h2>
         <button
           onClick={() => setShowCreateForm(!showCreateForm)}
-          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          className="w-full sm:w-auto px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm sm:text-base"
         >
           {showCreateForm ? 'Cancel' : '+ Create Offer'}
         </button>
       </div>
 
       {showCreateForm && (
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-lg font-semibold mb-4">Create Loan Offer</h3>
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+          <h3 className="text-base sm:text-lg font-semibold mb-4">Create Loan Offer</h3>
           <form onSubmit={handleCreateOffer} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -270,31 +270,31 @@ export default function UniversalLoanOffers() {
       ) : (
         <div className="grid gap-4">
           {offers.map((offer) => (
-            <div key={offer.id} className="bg-white rounded-xl shadow-lg p-6">
-              <div className="flex justify-between items-start">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-gray-900">
+            <div key={offer.id} className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                <div className="space-y-2 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-lg sm:text-2xl font-bold text-gray-900">
                       {ethers.formatEther(offer.amount)} PC
                     </span>
                     <span className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">
                       Active
                     </span>
                   </div>
-                  <div className="text-sm text-gray-600 space-y-1">
+                  <div className="text-xs sm:text-sm text-gray-600 space-y-1">
                     <p>Interest Rate: {Number(offer.interestRate) / 100}% per year</p>
                     <p>Max Duration: {Number(offer.maxDuration) / (24 * 60 * 60)} days</p>
                     <p>Min Collateral: {Number(offer.minCollateralRatio) / 100}%</p>
-                    <p className="text-xs">Lender: {offer.lender}</p>
+                    <p className="text-xs truncate">Lender: {offer.lender}</p>
                   </div>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 w-full sm:w-auto">
                   {offer.lender.toLowerCase() === address.toLowerCase() ? (
                     <button
                       onClick={() => handleCancelOffer(offer.id)}
                       disabled={loading}
-                      className="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors disabled:opacity-50"
+                      className="flex-1 sm:flex-none px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors disabled:opacity-50 text-sm"
                     >
                       Cancel
                     </button>
@@ -302,7 +302,7 @@ export default function UniversalLoanOffers() {
                     <button
                       onClick={() => handleAcceptOffer(offer.id, offer.amount, offer.minCollateralRatio)}
                       disabled={loading}
-                      className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
+                      className="flex-1 sm:flex-none px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 text-sm"
                     >
                       Accept
                     </button>

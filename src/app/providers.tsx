@@ -2,20 +2,21 @@
 
 import { PushUniversalWalletProvider, PushUI } from '@pushchain/ui-kit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  // Create QueryClient inside component to avoid SSR issues
- /* const [queryClient] = useState(() => new QueryClient({
+  // Create QueryClient with better caching for wallet state
+  const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000, // 1 minute
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        cacheTime: 10 * 60 * 1000, // 10 minutes
         refetchOnWindowFocus: false,
+        refetchOnReconnect: true,
+        retry: 2,
       },
     },
-  }));*/
-
-  const queryClient = new QueryClient();
+  }));
   
 
   const walletConfig = {
@@ -32,6 +33,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
       loginLayout: PushUI.CONSTANTS.LOGIN.LAYOUT.SPLIT,
       connectedLayout: PushUI.CONSTANTS.CONNECTED.LAYOUT.HOVER,
       appPreview: true,
+    },
+    // Enable session persistence
+    session: {
+      enabled: true,
+      duration: 7 * 24 * 60 * 60 * 1000, // 7 days
     },
    /* transak: {
       enabled: true,

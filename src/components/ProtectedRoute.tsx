@@ -7,7 +7,8 @@ import { usePushWalletContext, PushUI } from '@pushchain/ui-kit';
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const { connectionStatus } = usePushWalletContext();
+  const [reconnectAttempted, setReconnectAttempted] = useState(false);
+  const { connectionStatus, handleConnectToPushWallet } = usePushWalletContext();
   
   // Ensure we're on the client side
   useEffect(() => {
@@ -20,10 +21,31 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
     
     if (connectionStatus === PushUI.CONSTANTS.CONNECTION.STATUS.CONNECTED) {
       localStorage.setItem('wasConnected', 'true');
+      localStorage.setItem('lastConnectedTime', Date.now().toString());
     } else if (connectionStatus === PushUI.CONSTANTS.CONNECTION.STATUS.NOT_CONNECTED) {
-      localStorage.removeItem('wasConnected');
+      // Don't remove wasConnected immediately - allow for reconnection
     }
   }, [connectionStatus, isClient]);
+
+  // Auto-reconnect if user was previously connected
+  useEffect(() => {
+    if (!isClient || reconnectAttempted) return;
+    
+    const wasConnected = localStorage.getItem('wasConnected') === 'true';
+    const lastConnectedTime = localStorage.getItem('lastConnectedTime');
+    const isCurrentlyConnected = connectionStatus === PushUI.CONSTANTS.CONNECTION.STATUS.CONNECTED;
+    const isConnecting = connectionStatus === PushUI.CONSTANTS.CONNECTION.STATUS.CONNECTING;
+    
+    // Auto-reconnect if was connected within last 7 days
+    if (wasConnected && !isCurrentlyConnected && !isConnecting && lastConnectedTime) {
+      const daysSinceLastConnection = (Date.now() - parseInt(lastConnectedTime)) / (1000 * 60 * 60 * 24);
+      
+      if (daysSinceLastConnection < 7 && handleConnectToPushWallet) {
+        setReconnectAttempted(true);
+        handleConnectToPushWallet();
+      }
+    }
+  }, [isClient, connectionStatus, handleConnectToPushWallet, reconnectAttempted]);
 
   // Check if user was ever connected
   const wasConnected = isClient && localStorage.getItem('wasConnected') === 'true';
@@ -34,18 +56,37 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
   useEffect(() => {
     if (!isClient) return;
     
-    if (!wasConnected && !isCurrentlyConnected && !isConnecting) {
-      router.push('/');
-    }
+    // Give time for auto-reconnect attempt
+    const timer = setTimeout(() => {
+      if (!wasConnected && !isCurrentlyConnected && !isConnecting) {
+        router.push('/');
+      }
+    }, 2000);
+    
+    return () => clearTimeout(timer);
   }, [wasConnected, isCurrentlyConnected, isConnecting, router, isClient]);
 
   // Show loading state while checking
-  if (!isClient || isConnecting) {
+  if (!isClient || isConnecting || (!isCurrentlyConnected && reconnectAttempted && wasConnected)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 to-indigo-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 to-indigo-900 p-4">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white mx-auto mb-4"></div>
-          <p className="text-white text-xl">Loading...</p>
+          <p className="text-white text-xl mb-2">
+            {isConnecting ? 'Connecting...' : 'Loading...'}
+          </p>
+          {reconnectAttempted && wasConnected && (
+            <button
+              onClick={() => {
+                if (handleConnectToPushWallet) {
+                  handleConnectToPushWallet();
+                }
+              }}
+              className="mt-4 px-6 py-2 bg-white text-purple-900 rounded-lg font-semibold hover:bg-purple-100 transition-colors"
+            >
+              Reconnect Wallet
+            </button>
+          )}
         </div>
       </div>
     );

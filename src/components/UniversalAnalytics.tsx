@@ -38,48 +38,48 @@ export default function UniversalAnalytics() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Analytics</h2>
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Analytics</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-sm font-medium text-gray-600 mb-2">Credit Score</h3>
-          <p className="text-3xl font-bold text-purple-600">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-600 mb-2">Credit Score</h3>
+          <p className="text-2xl sm:text-3xl font-bold text-purple-600">
             {creditScore ? Number(creditScore.score) : 500}
           </p>
           <p className="text-xs text-gray-500 mt-1">Out of 1000</p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-sm font-medium text-gray-600 mb-2">Total Borrowed</h3>
-          <p className="text-3xl font-bold text-blue-600">
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-600 mb-2">Total Borrowed</h3>
+          <p className="text-2xl sm:text-3xl font-bold text-blue-600 break-all">
             {creditScore ? (Number(creditScore.totalBorrowed) / 1e18).toFixed(4) : '0'} PC
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-sm font-medium text-gray-600 mb-2">Total Repaid</h3>
-          <p className="text-3xl font-bold text-green-600">
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-600 mb-2">Total Repaid</h3>
+          <p className="text-2xl sm:text-3xl font-bold text-green-600 break-all">
             {creditScore ? (Number(creditScore.totalRepaid) / 1e18).toFixed(4) : '0'} PC
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-sm font-medium text-gray-600 mb-2">Loans Completed</h3>
-          <p className="text-3xl font-bold text-green-600">
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-600 mb-2">Loans Completed</h3>
+          <p className="text-2xl sm:text-3xl font-bold text-green-600">
             {creditScore ? Number(creditScore.loansCompleted) : 0}
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-sm font-medium text-gray-600 mb-2">Loans Defaulted</h3>
-          <p className="text-3xl font-bold text-red-600">
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-600 mb-2">Loans Defaulted</h3>
+          <p className="text-2xl sm:text-3xl font-bold text-red-600">
             {creditScore ? Number(creditScore.loansDefaulted) : 0}
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-sm font-medium text-gray-600 mb-2">Repayment Rate</h3>
-          <p className="text-3xl font-bold text-purple-600">
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-600 mb-2">Repayment Rate</h3>
+          <p className="text-2xl sm:text-3xl font-bold text-purple-600">
             {creditScore && Number(creditScore.totalBorrowed) > 0
               ? ((Number(creditScore.totalRepaid) / Number(creditScore.totalBorrowed)) * 100).toFixed(1)
               : '0'}%
@@ -87,9 +87,9 @@ export default function UniversalAnalytics() {
         </div>
       </div>
 
-      <div className="bg-blue-50 rounded-lg p-6">
-        <h3 className="font-semibold text-blue-900 mb-2">How Credit Score Works:</h3>
-        <ul className="list-disc list-inside space-y-1 text-sm text-blue-800">
+      <div className="bg-blue-50 rounded-lg p-4 sm:p-6">
+        <h3 className="font-semibold text-blue-900 mb-2 text-sm sm:text-base">How Credit Score Works:</h3>
+        <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-blue-800">
           <li>Starting score: 500</li>
           <li>Increases with successful loan repayments</li>
           <li>Decreases with defaults and liquidations</li>

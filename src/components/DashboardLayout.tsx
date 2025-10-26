@@ -91,7 +91,7 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
         </div>
       )}
 
-      <div className="flex-1 overflow-auto h-full flex flex-col gap-10 px-7 lg:px-20 py-10 bg-gray-50">
+      <div className="flex-1 overflow-auto h-full flex flex-col gap-6 sm:gap-10 px-4 sm:px-7 lg:px-20 py-6 sm:py-10 bg-gray-50 pb-24 sm:pb-10">
         <div className="flex items-center justify-between w-full">
           {/* Show PushLend logo with toggle when sidebar is hidden */}
           {!isTabletOrMobile && !sidebarVisible && (
@@ -118,7 +118,7 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
 
           {/* Right Side - Account Button */}
           <div className="ml-auto flex items-center gap-4">
-            <div className="max-w-[200px]">
+            <div className="max-w-[150px] sm:max-w-[200px]">
               <PushUniversalAccountButton />
             </div>
           </div>
@@ -130,16 +130,17 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
 
         {/* Bottom Navigation for Mobile */}
         {isTabletOrMobile && (
-          <div className="fixed bottom-5 left-1/2 -translate-x-1/2 w-[80%] bg-purple-600/30 backdrop-blur-md z-50 flex items-center justify-evenly px-10 py-4 rounded-full">
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-purple-600/90 backdrop-blur-md z-50 flex items-center justify-evenly px-4 py-3 rounded-full shadow-lg">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
-                className={`text-2xl p-2 rounded-lg ${
+                className={`text-xl sm:text-2xl p-2 rounded-lg ${
                   activeTab === tab.id
-                    ? "bg-purple-600"
+                    ? "bg-purple-700 scale-110"
                     : "bg-transparent hover:bg-purple-600/50"
                 } transition-all ease-in-out`}
+                title={tab.label}
               >
                 {tab.icon}
               </button>

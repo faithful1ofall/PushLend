@@ -138,7 +138,7 @@ export default function UniversalMyLoans() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">My Loans</h2>
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-900">My Loans</h2>
 
       {loading && loans.length === 0 ? (
         <div className="text-center py-12">
@@ -155,11 +155,11 @@ export default function UniversalMyLoans() {
             const isLender = address && loan.lender.toLowerCase() === address.toLowerCase();
 
             return (
-              <div key={loan.id} className="bg-white rounded-xl shadow-lg p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xl font-bold text-gray-900">
+              <div key={loan.id} className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-2">
+                  <div className="w-full">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <span className="text-base sm:text-xl font-bold text-gray-900">
                         Loan #{loan.id}
                       </span>
                       {getStatusLabel(loan.status)}
@@ -169,7 +169,7 @@ export default function UniversalMyLoans() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
                     <p className="text-gray-600">Principal</p>
                     <p className="font-semibold text-gray-900">{ethers.formatEther(loan.principalAmount)} PC</p>
@@ -190,18 +190,18 @@ export default function UniversalMyLoans() {
 
                 {loan.status === LoanStatus.Active && (
                   <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                    <p className="text-sm text-blue-900">
+                    <p className="text-xs sm:text-sm text-blue-900">
                       <strong>Total Repayment:</strong> {loan.totalRepayment} PC
                     </p>
                   </div>
                 )}
 
-                <div className="mt-4 flex gap-2">
+                <div className="mt-4 flex flex-col sm:flex-row gap-2">
                   {loan.status === LoanStatus.Pending && isLender && (
                     <button
                       onClick={() => handleFundLoan(loan.id, loan.principalAmount)}
                       disabled={loading}
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
+                      className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 text-sm"
                     >
                       Fund Loan
                     </button>
@@ -211,7 +211,7 @@ export default function UniversalMyLoans() {
                     <button
                       onClick={() => handleRepayLoan(loan.id, loan.totalRepayment)}
                       disabled={loading}
-                      className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50"
+                      className="w-full sm:w-auto px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 text-sm"
                     >
                       Repay Loan
                     </button>
@@ -221,7 +221,7 @@ export default function UniversalMyLoans() {
                     <button
                       onClick={() => handleLiquidateLoan(loan.id)}
                       disabled={loading}
-                      className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50"
+                      className="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 text-sm"
                     >
                       Liquidate
                     </button>

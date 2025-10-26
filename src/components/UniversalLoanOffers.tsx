@@ -32,7 +32,7 @@ export default function UniversalLoanOffers() {
       
       const loadedOffers = [];
 
-      for (let i = 1; i <= totalOffers; i++) {
+      for (let i = 1; i <= Number(counter); i++) {
   try {
     const offer = await contract.getOffer(i);
 

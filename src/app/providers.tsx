@@ -6,14 +6,17 @@ import { useState } from 'react';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   // Create QueryClient inside component to avoid SSR issues
-  const [queryClient] = useState(() => new QueryClient({
+ /* const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
         staleTime: 60 * 1000, // 1 minute
         refetchOnWindowFocus: false,
       },
     },
-  }));
+  }));*/
+
+  const queryClient = new QueryClient();
+  
 
   const walletConfig = {
     network: PushUI.CONSTANTS.PUSH_NETWORK.TESTNET,

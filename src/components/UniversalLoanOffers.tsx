@@ -37,14 +37,14 @@ export default function UniversalLoanOffers() {
     const offer = await contract.getOffer(i);
 
     // Skip empty / invalid offers
-    if (
+  /*  if (
       !offer ||
       !offer.active ||
       offer.amount == null ||
       offer.interestRate == null ||
       offer.maxDuration == null ||
       offer.minCollateralRatio == null
-    ) continue;
+    ) continue;*/
 
     loadedOffers.push({
       id: i,

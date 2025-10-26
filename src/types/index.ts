@@ -8,8 +8,6 @@ export interface Loan {
   duration: number;
   startBlock: number;
   status: string; // "pending", "active", "repaid", "liquidated"
-  loanAsset?: number; // 1=STX, 2=sBTC
-  collateralAsset?: number; // 1=STX, 2=sBTC
 }
 
 export interface LoanOffer {
@@ -20,8 +18,6 @@ export interface LoanOffer {
   maxDuration: number;
   minCollateral: number;
   active: boolean;
-  loanAsset?: number; // 1=STX, 2=sBTC
-  collateralAsset?: number; // 1=STX, 2=sBTC
 }
 
 export interface UserStats {
